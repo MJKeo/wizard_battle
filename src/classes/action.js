@@ -12,7 +12,7 @@ class Action {
   }
 
   succeeds_accuracy(randomFn = Math.random) {
-    return randomFn() <= this.accuracy;
+    return Math.random() <= this.accuracy;
   }
 
   perform_action(randomFn = Math.random) {
