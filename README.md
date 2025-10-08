@@ -107,9 +107,8 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:3167
 ```
 
-### Run React Frontend
+### Run React Frontend (from wizard_battle folder)
 ```bash
-cd frontend
 npm install
 npm start
 ```
