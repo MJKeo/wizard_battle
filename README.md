@@ -80,8 +80,7 @@ cd wizard-battle
 
 ## 3 - Set Up the Python Environment (using enviromnent.yml)
 
-```
-bash
+```bash
 conda env create -f environment.yml
 conda activate wizard-battle
 ```
@@ -108,9 +107,8 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:3167
 ```
 
-### Run React Frontend
+### Run React Frontend (from wizard_battle folder)
 ```bash
-cd frontend
 npm install
 npm start
 ```
