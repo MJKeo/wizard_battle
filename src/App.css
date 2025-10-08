@@ -30,6 +30,14 @@
   text-align: center;
 }
 
+.gather-summary {
+  margin: -8px 0 16px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.78);
+}
+
 .prompt-card {
   width: min(520px, 90vw);
   background: rgba(255, 255, 255, 0.04);
@@ -196,13 +204,21 @@
 }
 
 .wizard-label {
-  font-size: 1.15rem;
+  margin: 0;
+  padding: 8px 0;
+  font-size: clamp(1rem, 2.1vw, 1.4rem);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.68);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin: 0;
-  padding-block: 4px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.wizard-description-origin {
+  margin: 4px 0 8px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  line-height: 1.4;
 }
 
 .wizard-footer-actions {
@@ -564,6 +580,71 @@
   flex-direction: column;
   gap: 18px;
   box-shadow: 0 18px 40px rgba(7, 12, 29, 0.48);
+}
+
+.battle-column__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.battle-wizard-name {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.battle-wizard-name .tooltip-trigger {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  position: relative;
+}
+
+.battle-wizard-name .tooltip-content {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: rgba(17, 24, 39, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  border-radius: 12px;
+  padding: 12px 14px;
+  min-width: 220px;
+  max-width: 320px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.92);
+  box-shadow: 0 12px 24px rgba(2, 6, 23, 0.65);
+  z-index: 15;
+}
+
+.battle-wizard-name .tooltip-trigger:hover + .tooltip-content,
+.battle-wizard-name .tooltip-content:hover {
+  display: block;
+}
+
+.battle-wizard-name .tooltip-content::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  background: inherit;
+  border-left: inherit;
+  border-top: inherit;
+  transform: rotate(45deg);
+  z-index: -1;
 }
 
 .battle-column__header h2 {

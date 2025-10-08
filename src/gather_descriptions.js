@@ -40,6 +40,11 @@ function GatherDescriptions({ onComplete }) {
   return (
     <div className="gather-wrapper">
       <h1 className="title">Wizard Battle</h1>
+      <p className="gather-summary">
+        • Each player crafts lore for their champion spellcasters
+        <br />• Watch the arcane forge warriors from your words
+        <br />• See these wizards clash in combat!
+      </p>
 
       {phase === "player1" && (
         <section className="prompt-card">

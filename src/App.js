@@ -52,6 +52,7 @@ function App() {
           playerTwoWizard={playerTwoWizard}
           onReset={handleReset}
           apiBaseUrl={API_BASE_URL}
+          descriptions={descriptions}
         />
       </div>
     );

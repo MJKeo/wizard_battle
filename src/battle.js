@@ -180,10 +180,42 @@ const HorizontalStatBars = ({ state }) => {
   );
 };
 
-const BattleColumn = ({ actions, wizardState }) => (
+const BattleColumn = ({ actions, wizardState, description }) => (
   <section className="battle-column">
     <header className="battle-column__header">
-      <h2>{wizardState.player.wizard.name}</h2>
+      <div className="battle-wizard-name">
+        <h2>{wizardState.player.wizard.name}</h2>
+        {(() => {
+          const combatStyle = wizardState.player?.wizard?.combat_style;
+          const hasTooltipContent = Boolean(description || combatStyle);
+          if (!hasTooltipContent) {
+            return null;
+          }
+          return (
+            <>
+              <span className="tooltip-trigger">?</span>
+              <div className="tooltip-content">
+                {combatStyle && (
+                  <>
+                    <strong>Combat Style</strong>
+                    <br />
+                    <span>{combatStyle}</span>
+                    {description && <br />}
+                    {description && <br />}
+                  </>
+                )}
+                {description && (
+                  <>
+                    <strong>Original Description</strong>
+                    <br />
+                    <span>{description}</span>
+                  </>
+                )}
+              </div>
+            </>
+          );
+        })()}
+      </div>
     </header>
     <div className="battle-column__content">
       <div className="battle-stats">
@@ -222,7 +254,7 @@ const BattleColumn = ({ actions, wizardState }) => (
   </section>
 );
 
-const Battle = ({ playerOneWizard, playerTwoWizard, onReset, apiBaseUrl }) => {
+const Battle = ({ playerOneWizard, playerTwoWizard, onReset, apiBaseUrl, descriptions }) => {
   const gameStateRef = useRef(null);
   const controllerRef = useRef(null);
   const cancelledRef = useRef(false);
@@ -236,6 +268,14 @@ const Battle = ({ playerOneWizard, playerTwoWizard, onReset, apiBaseUrl }) => {
   const winnerRef = useRef(null);
   const isExecutingActionRef = useRef(false);
   const [generatingWizardName, setGeneratingWizardName] = useState(null);
+  const descriptionsRef = useRef({ playerOne: "", playerTwo: "" });
+
+  useEffect(() => {
+    descriptionsRef.current = {
+      playerOne: descriptions?.playerOne ?? descriptionsRef.current.playerOne ?? "",
+      playerTwo: descriptions?.playerTwo ?? descriptionsRef.current.playerTwo ?? "",
+    };
+  }, [descriptions]);
 
   const [playerStates, setPlayerStates] = useState([]);
   const [battleLog, setBattleLog] = useState([]);
@@ -621,6 +661,9 @@ const Battle = ({ playerOneWizard, playerTwoWizard, onReset, apiBaseUrl }) => {
   const playerOneState = playerStates[0] ?? null;
   const playerTwoState = playerStates[1] ?? null;
 
+  const playerOneDescription = playerOneState?.player?.wizard?.original_description ?? descriptionsRef.current.playerOne;
+  const playerTwoDescription = playerTwoState?.player?.wizard?.original_description ?? descriptionsRef.current.playerTwo;
+
   const nextMoveDisabled =
     !!winner || autoProgress || isFetchingAction || isExecutingAction || !pendingAction;
   const autoProgressDisabled = !!winner;
@@ -635,6 +678,7 @@ const Battle = ({ playerOneWizard, playerTwoWizard, onReset, apiBaseUrl }) => {
         <BattleColumn
           wizardState={playerOneState}
           actions={formatActions(playerOneState.player.wizard, playerOneState.current_mana)}
+          description={playerOneDescription}
         />
       )}
 
@@ -705,6 +749,7 @@ const Battle = ({ playerOneWizard, playerTwoWizard, onReset, apiBaseUrl }) => {
         <BattleColumn
           wizardState={playerTwoState}
           actions={formatActions(playerTwoState.player.wizard, playerTwoState.current_mana)}
+          description={playerTwoDescription}
         />
       )}
     </section>

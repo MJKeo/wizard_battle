@@ -92,6 +92,11 @@ function DisplayWizards({
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const descriptionByLabel = useMemo(() => ({
+    "Player 1": descriptions?.playerOne ?? "",
+    "Player 2": descriptions?.playerTwo ?? "",
+  }), [descriptions]);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -294,20 +299,26 @@ function DisplayWizards({
         {["Player 1", "Player 2"].map((label) => {
           const record = results.find((entry) => entry.label === label);
           if (!record) {
+            const initialDescription = descriptionByLabel[label];
             return (
               <article key={label} className="wizard-card">
                 <header className="wizard-header">
                   <p className="wizard-label">{label}</p>
+                  {initialDescription && (
+                    <p className="wizard-description-origin">"{initialDescription}"</p>
+                  )}
                   <p className="loading-message">Awaiting wizard...</p>
                 </header>
               </article>
             );
           }
 
-          const { stats, spells, wizard: localWizard } = record;
+          const { stats, spells, wizard: localWizard, description: recordDescription } = record;
           const wizardFromProps = label === "Player 1" ? playerOneWizard : playerTwoWizard;
           const wizard = wizardFromProps ?? localWizard;
           const displayStats = wizard ?? stats;
+
+          const description = recordDescription ?? descriptionByLabel[label];
 
           const name = wizard ? wizard.name : stats?.name;
           const combatStyle = wizard ? wizard.combat_style : stats?.combat_style;
@@ -353,6 +364,7 @@ function DisplayWizards({
             <article key={label} className="wizard-card">
             <header className="wizard-header">
               <p className="wizard-label">{label}</p>
+              {description && <p className="wizard-description-origin">"{description}"</p>} 
               {displayStats ? (
                 <>
                   <h3 className="wizard-name">{name}</h3>
