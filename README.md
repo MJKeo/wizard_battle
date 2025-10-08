@@ -80,8 +80,7 @@ cd wizard-battle
 
 ## 3 - Set Up the Python Environment (using enviromnent.yml)
 
-```
-bash
+```bash
 conda env create -f environment.yml
 conda activate wizard-battle
 ```
